@@ -19,6 +19,8 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::middleware('CheckAuth')->prefix('user')->group(function () {
-        Route::get('/me', [AuthController::class, 'me']);
+        Route::get('/all', [UserController::class, 'getUsers']);
+        Route::patch('/update', [UserController::class, 'updateUser']);
+        Route::delete('/delete/{id}', [UserController::class, 'deleteUser']);
     });
 });
