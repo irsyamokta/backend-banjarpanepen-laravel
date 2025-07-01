@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TourController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/', function (Request $request) {
@@ -22,5 +23,15 @@ Route::prefix('v1')->group(function () {
         Route::get('/all', [UserController::class, 'getUsers']);
         Route::patch('/update', [UserController::class, 'updateUser']);
         Route::delete('/delete/{id}', [UserController::class, 'deleteUser']);
+    });
+
+    Route::prefix('tour')->group(function () {
+        Route::get('/all', [TourController::class, 'getTours']);
+        Route::get('/{id}', [TourController::class, 'getTourById']);
+        Route::middleware('CheckAuth')->group(function () {
+            Route::post('/create', [TourController::class, 'createTour']);
+            Route::patch('/update/{id}', [TourController::class, 'updateTour']);
+            Route::delete('/delete/{id}', [TourController::class, 'deleteTour']);
+        });
     });
 });
