@@ -44,7 +44,6 @@ class AuthController extends Controller
         try {
             $validator = ValidationHelper::login($request->all());
 
-
             if ($validator->fails()) {
                 return response()->json(['message' => 'Validasi gagal', 'errors' => $validator->errors()], 400);
             }
