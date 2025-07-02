@@ -5,8 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Log;
 use App\Helpers\JwtHelper;
 use App\Models\User;
 
@@ -19,8 +17,6 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        \Log::info('refreshToken dari cookie:', [$request->cookie('refreshToken')]);
-
         $refreshToken = $request->cookie('refreshToken');
 
         if (!$refreshToken) {
@@ -32,7 +28,6 @@ class CheckAuth
 
         try {
             $decoded = JwtHelper::decode($refreshToken, env('REFRESH_TOKEN_SECRET'));
-            \Log::info('Decoded payload:', (array) $decoded);
             $userId = $decoded->userId ?? null;
 
             $user = User::find($userId);
@@ -57,8 +52,6 @@ class CheckAuth
             return $next($request);
 
         } catch (\Exception $e) {
-            Log::error('Refresh Token Verification Error: ' . $e->getMessage());
-
             return response()->json([
                 'status' => 'forbidden',
                 'message' => 'Refresh token tidak valid',
