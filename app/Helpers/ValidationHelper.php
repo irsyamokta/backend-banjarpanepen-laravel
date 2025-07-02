@@ -112,4 +112,40 @@ class ValidationHelper
             ],
         );
     }
+
+    public static function event(array $data)
+    {
+        return Validator::make(
+            $data,
+            [
+                'title' => 'required|string|min:3|max:100',
+                'description' => 'required|string|min:3',
+                'date' => 'required|date_format:Y-m-d|after_or_equal:today',
+                'time' => 'required|date_format:H:i',
+                'place' => 'required|string|min:3',
+                'price' => 'nullable|numeric|min:0',
+            ],
+            [
+                'title.required' => 'Judul tidak boleh kosong!',
+                'title.min' => 'Judul minimal harus 3 karakter!',
+                'title.max' => 'Judul maksimal 100 karakter!',
+
+                'description.required' => 'Deskripsi tidak boleh kosong!',
+                'description.min' => 'Deskripsi minimal harus 3 karakter!',
+
+                'date.required' => 'Tanggal tidak boleh kosong!',
+                'date.date' => 'Tanggal tidak valid!',
+                'date.after_or_equal' => 'Tanggal harus dari hari ini atau lebih!',
+
+                'time.required' => 'Jam mulai tidak boleh kosong!',
+                'time.regex' => 'Format jam mulai harus HH:mm (contoh: 08:00)',
+
+                'place.required' => 'Tempat tidak boleh kosong!',
+                'place.min' => 'Tempat minimal harus 3 karakter!',
+
+                'price.min' => 'Harga minimal adalah 0!',
+                'price.numeric' => 'Harga harus berupa angka!',
+            ],
+        );
+    }
 }
