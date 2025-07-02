@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\EventController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/', function (Request $request) {
@@ -28,10 +29,20 @@ Route::prefix('v1')->group(function () {
     Route::prefix('tour')->group(function () {
         Route::get('/all', [TourController::class, 'getTours']);
         Route::get('/{id}', [TourController::class, 'getTourById']);
-        Route::middleware('CheckAuth')->group(function () {
+        Route::middleware('CheckAuth:ADMIN')->group(function () {
             Route::post('/create', [TourController::class, 'createTour']);
             Route::patch('/update/{id}', [TourController::class, 'updateTour']);
             Route::delete('/delete/{id}', [TourController::class, 'deleteTour']);
+        });
+    });
+
+    Route::prefix('event')->group(function () {
+        Route::get('/all', [EventController::class, 'getEvents']);
+        Route::get('/{id}', [EventController::class, 'getEventById']);
+        Route::middleware('CheckAuth:ADMIN')->group(function () {
+            Route::post('/create', [EventController::class, 'createEvent']);
+            Route::patch('/update/{id}', [EventController::class, 'updateEvent']);
+            Route::delete('/delete/{id}', [EventController::class, 'deleteEvent']);
         });
     });
 });
