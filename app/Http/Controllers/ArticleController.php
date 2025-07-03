@@ -83,7 +83,7 @@ class ArticleController extends Controller
             if (!$article) {
                 return response()->json(['message' => 'Artikel tidak ditemukan'], 404);
             }
-            
+
             $imageUrl = $article->thumbnail;
             $publicId = $article->public_id;
 
@@ -102,8 +102,6 @@ class ArticleController extends Controller
             }
 
             $user = $request->get('user');
-
-            Log::info('User ID: ' . $user->id);
 
             $article->update([
                 'title' => $data['title'],
