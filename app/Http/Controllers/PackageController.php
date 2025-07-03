@@ -9,6 +9,7 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class PackageController extends Controller
 {
+    // Get all packages
     public function getPackages(Request $request)
     {
         $limit = $request->query('limit', 10);
@@ -16,6 +17,7 @@ class PackageController extends Controller
         return response()->json($packages);
     }
 
+    // Get package by id
     public function getPackageById($id)
     {
         $package = TourPackage::find($id);
@@ -25,6 +27,7 @@ class PackageController extends Controller
         return response()->json($package);
     }
 
+    // Create package
     public function createPackage(Request $request)
     {
         try {
@@ -59,6 +62,7 @@ class PackageController extends Controller
         }
     }
 
+    // Update package
     public function updatePackage(Request $request, $id)
     {
         try {
@@ -106,6 +110,7 @@ class PackageController extends Controller
         }
     }
 
+    // Delete package
     public function deletePackage($id)
     {
         try {
