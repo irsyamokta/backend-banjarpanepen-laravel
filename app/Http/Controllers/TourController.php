@@ -62,7 +62,7 @@ class TourController extends Controller
             'public_id' => $data['public_id']
         ]);
 
-            return response()->json(['message' => 'Tour berhasil dibuat', 'data' => $tour]);
+            return response()->json($tour);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Terjadi kesalahan'], 500);
         }
