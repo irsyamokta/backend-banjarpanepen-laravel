@@ -148,4 +148,30 @@ class ValidationHelper
             ],
         );
     }
+
+    public static function package($data)
+    {
+        return Validator::make(
+            $data,
+            [
+                'title' => 'required|string|min:3|max:100',
+                'price' => 'required|numeric|min:10000',
+                'benefit' => 'required|string|min:3',
+            ],
+            [
+                'title.required' => 'Judul tidak boleh kosong!',
+                'title.string' => 'Judul harus berupa string!',
+                'title.min' => 'Judul minimal harus 3 karakter!',
+                'title.max' => 'Judul maksimal 100 karakter!',
+
+                'price.required' => 'Harga tidak boleh kosong!',
+                'price.numeric' => 'Harga harus berupa angka!',
+                'price.min' => 'Harga minimal adalah 10000!',
+
+                'benefit.required' => 'Benefit tidak boleh kosong!',
+                'benefit.string' => 'Benefit harus berupa string!',
+                'benefit.min' => 'Benefit minimal harus 3 karakter!',
+            ],
+        );
+    }
 }
