@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PackageController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/', function (Request $request) {
@@ -43,6 +44,16 @@ Route::prefix('v1')->group(function () {
             Route::post('/create', [EventController::class, 'createEvent']);
             Route::patch('/update/{id}', [EventController::class, 'updateEvent']);
             Route::delete('/delete/{id}', [EventController::class, 'deleteEvent']);
+        });
+    });
+
+    Route::prefix('package')->group(function () {
+        Route::get('/all', [PackageController::class, 'getPackages']);
+        Route::get('/{id}', [PackageController::class, 'getPackageById']);
+        Route::middleware('CheckAuth:ADMIN')->group(function () {
+            Route::post('/create', [PackageController::class, 'createPackage']);
+            Route::patch('/update/{id}', [PackageController::class, 'updatePackage']);
+            Route::delete('/delete/{id}', [PackageController::class, 'deletePackage']);
         });
     });
 });
