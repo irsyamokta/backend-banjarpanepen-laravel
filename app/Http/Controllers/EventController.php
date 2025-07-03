@@ -61,7 +61,7 @@ class EventController extends Controller
 
             return response()->json($event);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Terjadi kesalahan' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Terjadi kesalahan saat membuat event'], 500);
         }
     }
 
@@ -79,12 +79,13 @@ class EventController extends Controller
 
             $event = Event::find($id);
 
-            $imageUrl = $event->thumbnail;
-            $publicId = $event->public_id;
-
             if (!$event) {
                 return response()->json(['message' => 'Event tidak ditemukan'], 404);
             }
+            
+            $imageUrl = $event->thumbnail;
+            $publicId = $event->public_id;
+
 
             if ($request->hasFile('file')) {
                 if ($publicId) {
@@ -95,8 +96,8 @@ class EventController extends Controller
                     'folder' => 'images/event',
                 ]);
 
-                $data['image_url'] = $uploaded['secure_url'];
-                $data['public_id'] = $uploaded['public_id'];
+                $imageUrl = $uploaded['secure_url'];
+                $publicId = $uploaded['public_id'];
             }
 
             $event->update([
@@ -106,8 +107,8 @@ class EventController extends Controller
                 'time' => $data['time'],
                 'place' => $data['place'],
                 'price' => intval($data['price']),
-                'thumbnail' => $data['image_url'],
-                'public_id' => $data['public_id'],
+                'thumbnail' => $imageUrl,
+                'public_id' => $publicId,
             ]);
 
             return response()->json(['message' => 'Event berhasil diperbarui', 'data' => $event]);

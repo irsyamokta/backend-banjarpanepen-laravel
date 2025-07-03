@@ -64,7 +64,7 @@ class TourController extends Controller
 
             return response()->json($tour);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Terjadi kesalahan'], 500);
+            return response()->json(['message' => 'Terjadi kesalahan saat membuat tour'], 500);
         }
     }
 
@@ -82,12 +82,12 @@ class TourController extends Controller
 
             $tour = Tour::find($id);
 
-            $imageUrl = $tour->thumbnail;
-            $publicId = $tour->public_id;
-
             if (!$tour) {
                 return response()->json(['message' => 'Tour tidak ditemukan'], 404);
             }
+
+            $imageUrl = $tour->thumbnail;
+            $publicId = $tour->public_id;
 
             if ($request->hasFile('file')) {
                 if ($publicId) {
@@ -118,7 +118,7 @@ class TourController extends Controller
 
             return response()->json(['message' => 'Tour berhasil diperbarui', 'data' => $tour]);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Terjadi kesalahan'], 500);
+            return response()->json(['message' => 'Terjadi kesalahan saat memperbarui tour'], 500);
         }
     }
 

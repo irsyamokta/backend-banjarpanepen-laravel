@@ -76,12 +76,12 @@ class PackageController extends Controller
 
             $package = TourPackage::find($id);
 
-            $imageUrl = $package->thumbnail;
-            $publicId = $package->public_id;
-
             if (!$package) {
                 return response()->json(['message' => 'Package tidak ditemukan'], 404);
             }
+
+            $imageUrl = $package->thumbnail;
+            $publicId = $package->public_id;
 
             if ($request->hasFile('file')) {
                 if ($publicId) {
@@ -92,21 +92,21 @@ class PackageController extends Controller
                     'folder' => 'images/package',
                 ]);
 
-                $data['image_url'] = $uploaded['secure_url'];
-                $data['public_id'] = $uploaded['public_id'];
+                $imageUrl = $uploaded['secure_url'];
+                $publicId = $uploaded['public_id'];
             }
 
             $package->update([
                 'title' => $data['title'],
                 'price' => intval($data['price']),
                 'benefit' => $data['benefit'],
-                'thumbnail' => $data['image_url'],
-                'public_id' => $data['public_id'],
+                'thumbnail' => $imageUrl,
+                'public_id' => $publicId,
             ]);
 
             return response()->json(['message' => 'Package berhasil diperbarui', 'data' => $package]);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Terjadi kesalahan saat mengupdate package'], 500);
+            return response()->json(['message' => 'Terjadi kesalahan saat memperbarui package'], 500);
         }
     }
 

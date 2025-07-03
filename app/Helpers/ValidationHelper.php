@@ -174,4 +174,30 @@ class ValidationHelper
             ],
         );
     }
+
+    public static function article($data)
+    {
+        return Validator::make(
+            $data,
+            [
+                'title' => 'required|string|min:3|max:100',
+                'content' => 'required|string|min:3',
+                'writer' => 'required|string|min:3',
+            ],
+            [
+                'title.required' => 'Judul tidak boleh kosong!',
+                'title.string' => 'Judul harus berupa string!',
+                'title.min' => 'Judul minimal harus 3 karakter!',
+                'title.max' => 'Judul maksimal 100 karakter!',
+
+                'content.required' => 'Konten tidak boleh kosong!',
+                'content.string' => 'Konten harus berupa string!',
+                'content.min' => 'Konten minimal harus 3 karakter!',
+
+                'writer.required' => 'Penulis tidak boleh kosong!',
+                'writer.string' => 'Penulis harus berupa string!',
+                'writer.min' => 'Penulis minimal harus 3 karakter!',
+            ],
+        );
+    }
 }
