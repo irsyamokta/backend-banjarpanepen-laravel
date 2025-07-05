@@ -9,6 +9,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\SettingController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/', function (Request $request) {
@@ -76,6 +77,16 @@ Route::prefix('v1')->group(function () {
             Route::post('/create', [GalleryController::class, 'createGallery']);
             Route::patch('/update/{id}', [GalleryController::class, 'updateGallery']);
             Route::delete('/delete/{id}', [GalleryController::class, 'deleteGallery']);
+        });
+    });
+
+    Route::prefix('setting')->group(function () {
+        Route::get('/all', [SettingController::class, 'getSettings']);
+        Route::get('/{id}', [SettingController::class, 'getSettingById']);
+        Route::middleware('CheckAuth:ADMIN')->group(function () {
+            Route::post('/create', [SettingController::class, 'createSetting']);
+            Route::patch('/update/{id}', [SettingController::class, 'updateSetting']);
+            Route::delete('/delete/{id}', [SettingController::class, 'deleteSetting']);
         });
     });
 });
