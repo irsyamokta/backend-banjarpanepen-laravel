@@ -200,4 +200,25 @@ class ValidationHelper
             ],
         );
     }
+
+    public static function gallery($data)
+    {
+        return Validator::make(
+            $data,
+            [
+                'title' => 'required|string|min:3|max:100',
+                'caption' => 'required|string|min:3',
+            ],
+            [
+                'title.required' => 'Judul tidak boleh kosong!',
+                'title.string' => 'Judul harus berupa string!',
+                'title.min' => 'Judul minimal harus 3 karakter!',
+                'title.max' => 'Judul maksimal 100 karakter!',
+
+                'caption.required' => 'Caption tidak boleh kosong!',
+                'caption.string' => 'Caption harus berupa string!',
+                'caption.min' => 'Caption minimal harus 3 karakter!',
+            ],
+        );
+    }
 }
