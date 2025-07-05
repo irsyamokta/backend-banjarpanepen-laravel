@@ -8,6 +8,7 @@ use App\Http\Controllers\TourController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\GalleryController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/', function (Request $request) {
@@ -65,6 +66,16 @@ Route::prefix('v1')->group(function () {
             Route::post('/create', [ArticleController::class, 'createArticle']);
             Route::patch('/update/{id}', [ArticleController::class, 'updateArticle']);
             Route::delete('/delete/{id}', [ArticleController::class, 'deleteArticle']);
+        });
+    });
+
+    Route::prefix('gallery')->group(function () {
+        Route::get('/all', [GalleryController::class, 'getGalleries']);
+        Route::get('/{id}', [GalleryController::class, 'getGalleryById']);
+        Route::middleware('CheckAuth:ADMIN')->group(function () {
+            Route::post('/create', [GalleryController::class, 'createGallery']);
+            Route::patch('/update/{id}', [GalleryController::class, 'updateGallery']);
+            Route::delete('/delete/{id}', [GalleryController::class, 'deleteGallery']);
         });
     });
 });
