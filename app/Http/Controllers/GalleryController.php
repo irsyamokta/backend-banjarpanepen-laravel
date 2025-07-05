@@ -9,6 +9,7 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class GalleryController extends Controller
 {
+    // Get all galleries
     public function getGalleries (Request $request)
     {
         $limit = $request->query('limit', 10);
@@ -16,6 +17,7 @@ class GalleryController extends Controller
         return response()->json($gallery);
     }
 
+    // Get gallery by id
     public function getGalleryById($id)
     {
         $gallery = Gallery::find($id);
@@ -25,6 +27,7 @@ class GalleryController extends Controller
         return response()->json($gallery);
     }
 
+    // Create gallery
     public function createGallery(Request $request)
     {
         try {
@@ -58,6 +61,7 @@ class GalleryController extends Controller
         }
     }
 
+    // Update gallery
     public function updateGallery(Request $request, $id)
     {
         try {
@@ -81,7 +85,7 @@ class GalleryController extends Controller
                 if ($publicId) {
                     Cloudinary::uploadApi()->destroy($publicId);
                 }
-                
+
                 $uploaded = Cloudinary::uploadApi()->upload($request->file('file')->getRealPath(), [
                     'folder' => 'images/gallery',
                 ]);
@@ -103,6 +107,7 @@ class GalleryController extends Controller
         }
     }
 
+    // Delete gallery
     public function deleteGallery($id)
     {
         try {
