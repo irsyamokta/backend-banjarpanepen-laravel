@@ -6,31 +6,35 @@ class CookieHelper
 {
     public static function makeRefreshToken(string $token)
     {
+        $isProduction = app()->environment('production');
+
         return cookie(
             'refreshToken',
             $token,
             60 * 24 * 7, // 7 hari
             '/',
             null,
-            app()->environment('production'), // secure hanya saat production
+            true, // secure hanya saat production
             true, // httpOnly
             false, // raw
-            'Lax',
+            'None',
         );
     }
 
     public static function forgetRefreshToken()
     {
+        $isProduction = app()->environment('production');
+
         return cookie(
             'refreshToken',
             null, // value kosong
             -1, // expired
             '/',
             null,
-            app()->environment('production'), // secure
+            true, // secure
             true, // httpOnly
             false,
-            'Lax',
+            'None',
         );
     }
 }
