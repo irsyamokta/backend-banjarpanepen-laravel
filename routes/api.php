@@ -24,10 +24,13 @@ Route::prefix('v1')->group(function () {
         Route::get('/verify/{token}', [AuthController::class, 'verifyEmail']);
     });
 
-    Route::middleware('CheckAuth')->prefix('user')->group(function () {
+    Route::prefix('user')->group(function () {
         Route::get('/all', [UserController::class, 'getUsers']);
-        Route::patch('/update', [UserController::class, 'updateUser']);
-        Route::delete('/delete/{id}', [UserController::class, 'deleteUser']);
+        Route::get('/contact', [UserController::class, 'getUserByContact']);
+        Route::middleware('CheckAuth:ADMIN')->group(function () {
+            Route::patch('/update', [UserController::class, 'updateUser']);
+            Route::delete('/delete/{id}', [UserController::class, 'deleteUser']);
+        });
     });
 
     Route::prefix('tour')->group(function () {
