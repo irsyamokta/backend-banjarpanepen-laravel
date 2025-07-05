@@ -221,4 +221,26 @@ class ValidationHelper
             ],
         );
     }
+
+    public static function setting($data)
+    {
+        return Validator::make(
+            $data,
+            [
+                'name' => 'required|string|min:3|max:100',
+                'category' => 'required|string|min:3|max:100',
+            ],
+            [
+                'name.required' => 'Nama tidak boleh kosong!',
+                'name.string' => 'Nama harus berupa string!',
+                'name.min' => 'Nama minimal harus 3 karakter!',
+                'name.max' => 'Nama maksimal 100 karakter!',
+
+                'category.required' => 'Kategori tidak boleh kosong!',
+                'category.string' => 'Kategori harus berupa string!',
+                'category.min' => 'Kategori minimal harus 3 karakter!',
+                'category.max' => 'Kategori maksimal 100 karakter!',
+            ],
+        );
+    }
 }
