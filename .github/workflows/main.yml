@@ -29,5 +29,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         server-dir: /api/
         protocol: ftps
+        passive: true
         exclude: |
           **/node_modules/**
+          **/vendor/**
