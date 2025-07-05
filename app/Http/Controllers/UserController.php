@@ -22,7 +22,7 @@ class UserController extends Controller
     public function getUserByContact()
     {
         $users = User::select('id', 'name', 'phone', 'instagram')->get();
-        return response()->json(['users' => $users]);
+        return response()->json(['user' => $users]);
     }
 
     // Update user
